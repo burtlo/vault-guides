@@ -1,0 +1,17 @@
+[Unit]
+Description=Webapp with Options
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Environment="OPTIONS=%i"
+Restart=on-failure
+PermissionsStartOnly=true
+ExecStart=/usr/local/bin/rackup /app/config.ru \$OPTIONS
+ExecReload=/bin/kill -HUP \$MAINPID
+KillSignal=SIGTERM
+User=vault
+Group=vault
+
+[Install]
+WantedBy=multi-user.target
